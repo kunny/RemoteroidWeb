@@ -1,0 +1,8 @@
+eclipse.preferences.version=1
+filesCopiedToWebInfLib=appengine-api-labs.jar|appengine-endpoints.jar|appengine-jsr107cache-1.7.0.jar|jsr107cache-1.1.jar|appengine-api-1.0-sdk-1.7.0.jar|datanucleus-api-jdo-3.0.7.jar|datanucleus-api-jpa-3.0.9.jar|datanucleus-appengine-2.0.1.jar|datanucleus-core-3.0.10.jar|geronimo-jpa_2.0_spec-1.0.jar|jdo-api-3.1-SNAPSHOT-20110926.jar|transaction-api-1.1.jar
+gaeDatanucleusVersion=v2
+gaeDeployDialogSettings=
+gaeHrdEnabled=true
+gaeIsEclipseDefaultInstPath=true
+googleCloudSqlEnabled=false
+localDevMySqlEnabled=true
