@@ -1,8 +1,10 @@
 package org.secmem.remoteroid.server.database;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
 @XmlRootElement
+@XmlSeeAlso(Account.class)
 public class Device{
 	public static final String _NAME = "Devices";
 	

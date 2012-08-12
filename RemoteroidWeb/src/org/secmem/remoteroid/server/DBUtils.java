@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.secmem.remoteroid.server.database.Account;
 import org.secmem.remoteroid.server.database.Device;
+import org.secmem.remoteroid.server.database.Gcm;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -40,4 +41,15 @@ public class DBUtils {
 	protected Entity getDeviceEntity(){
 		return new Entity(Device._NAME, getRemoteroidKey(Device._NAME));
 	}
+	
+	protected String getGcmAPIKey(){
+		Query q = new Query(Gcm._NAME);
+		List<Entity> result = query(q);
+		if(result.size()==0){
+			throw new IllegalStateException("There are no entity for GCM API key. Please create Entity for GCM API key by accessing http://[your appengine domain]/apis/admin/init.");
+		}else{
+			return (String)result.get(0).getProperty(Gcm.API_KEY);
+		}
+	}
+	
 }

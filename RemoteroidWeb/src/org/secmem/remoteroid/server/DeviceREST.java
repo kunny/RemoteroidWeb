@@ -2,6 +2,7 @@ package org.secmem.remoteroid.server;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -11,12 +12,17 @@ import javax.ws.rs.core.MediaType;
 
 import org.secmem.remoteroid.server.database.Account;
 import org.secmem.remoteroid.server.database.Device;
+import org.secmem.remoteroid.server.database.WakeupMessage;
 import org.secmem.remoteroid.server.exception.DeviceNotFoundException;
 import org.secmem.remoteroid.server.response.BaseErrorResponse;
 import org.secmem.remoteroid.server.response.BaseResponse;
 import org.secmem.remoteroid.server.response.Codes;
 import org.secmem.remoteroid.server.response.ObjectResponse;
 
+import com.google.android.gcm.server.Constants;
+import com.google.android.gcm.server.Message;
+import com.google.android.gcm.server.Result;
+import com.google.android.gcm.server.Sender;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -28,6 +34,8 @@ import com.google.appengine.api.datastore.Query.FilterPredicate;
 
 @Path("/device")
 public class DeviceREST extends DBUtils{
+	
+	private static Logger log = Logger.getLogger("DeviceREST");
 	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -144,6 +152,47 @@ public class DeviceREST extends DBUtils{
 			return new BaseResponse();
 		}catch(Exception e){
 			e.printStackTrace();
+			return new BaseErrorResponse();
+		}
+	}
+	
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/wakeup")
+	public BaseResponse sendConnectionMessage(WakeupMessage wakeupMessage){
+		// Check user credential first
+		if(!AccountREST.isUserCredentialMatches(wakeupMessage.getDevice().getOwnerAccount())){
+			// Failed to authenticate.
+			return new BaseErrorResponse(Codes.Error.Account.AUTH_FAILED);
+		}
+		
+		try{
+			String gcmApiKey = getGcmAPIKey();
+			Sender sender = new Sender(gcmApiKey);
+			Message message = new Message.Builder().addData(WakeupMessage.IP_ADDRESS, wakeupMessage.getServerIpAddress()).build();
+			
+			Result result = sender.send(message, wakeupMessage.getDevice().getRegistrationKey(), 5);
+			
+			if (result.getMessageId() != null) {
+				 String canonicalRegId = result.getCanonicalRegistrationId();
+				 if (canonicalRegId != null) {
+					 // same device has more than on registration ID: update database
+					 log.warning("Updating database with new registration id..");
+					 Device device = wakeupMessage.getDevice();
+					 device.setRegistrationKey(canonicalRegId);
+					 updateDevice(device);
+				 }
+			} else {
+				 String error = result.getErrorCodeName();
+				 if (error.equals(Constants.ERROR_NOT_REGISTERED)) {
+					 // application has been removed from device - unregister database
+					 log.warning("Application has been removed from device. Deleting device data..");
+					 deleteDevice(wakeupMessage.getDevice());
+				 }
+			}
+			return new BaseResponse();
+		}catch(Exception e){
 			return new BaseErrorResponse();
 		}
 	}
