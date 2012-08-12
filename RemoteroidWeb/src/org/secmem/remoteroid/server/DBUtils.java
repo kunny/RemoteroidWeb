@@ -2,6 +2,9 @@ package org.secmem.remoteroid.server;
 
 import java.util.List;
 
+import org.secmem.remoteroid.server.database.Account;
+import org.secmem.remoteroid.server.database.Device;
+
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -17,11 +20,11 @@ public class DBUtils {
 		return datastore.put(entity);
 	}
 	
-	protected List<Entity> query(Query query){
+	protected static List<Entity> query(Query query){
 		return query(query, FetchOptions.Builder.withDefaults());
 	}
 	
-	protected List<Entity> query(Query query, FetchOptions options){
+	protected static List<Entity> query(Query query, FetchOptions options){
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		return datastore.prepare(query).asList(options);
 	}
@@ -30,4 +33,11 @@ public class DBUtils {
 		return KeyFactory.createKey("Remoteroid", kind);
 	}
 	
+	protected Entity getAccountEntity(){
+		return new Entity(Account._NAME, getRemoteroidKey(Account._NAME));
+	}
+	
+	protected Entity getDeviceEntity(){
+		return new Entity(Device._NAME, getRemoteroidKey(Device._NAME));
+	}
 }
