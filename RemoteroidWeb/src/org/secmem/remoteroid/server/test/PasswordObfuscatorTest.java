@@ -3,8 +3,8 @@ package org.secmem.remoteroid.server.test;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.secmem.remoteroid.server.database.SHAPasswordObfuscator;
-import org.secmem.remoteroid.server.database.PasswordObfuscator;
+import org.secmem.remoteroid.server.database.support.SHAPasswordObfuscator;
+import org.secmem.remoteroid.server.database.support.PasswordObfuscator;
 
 public class PasswordObfuscatorTest {
 

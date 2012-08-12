@@ -1,4 +1,4 @@
-package org.secmem.remoteroid.server.database;
+package org.secmem.remoteroid.server.database.support;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

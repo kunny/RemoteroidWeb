@@ -9,7 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.secmem.remoteroid.server.database.Account;
-import org.secmem.remoteroid.server.database.SHAPasswordObfuscator;
+import org.secmem.remoteroid.server.database.support.SHAPasswordObfuscator;
 import org.secmem.remoteroid.server.response.BaseErrorResponse;
 import org.secmem.remoteroid.server.response.BaseResponse;
 import org.secmem.remoteroid.server.response.Codes;

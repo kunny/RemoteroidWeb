@@ -1,4 +1,4 @@
-package org.secmem.remoteroid.server.database;
+package org.secmem.remoteroid.server.database.support;
 
 public interface PasswordObfuscator {
 	public String generate(String password);
