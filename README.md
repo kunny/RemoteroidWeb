@@ -1,6 +1,8 @@
 Remoteroid web service
 =========
-
+  
+![Remoteroid](/remoteroid_logo.png)
+  
 This project aims to support 'Remote-connect' feature, which user can connect to the phone from PC, without any control on the phone.
 
 License
@@ -73,7 +75,7 @@ REST API documentation
 > * Content type : application/json
 > * Request payload : {"email" : "android@android.com", "password" : "test"}
 
-**Returns**  
+**Returns**    
 *Login succeed :*
 >  {"result":"0","data":{"@type":"account","email":"android@android.com","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"}}
 
@@ -87,10 +89,10 @@ REST API documentation
 
 *Remove user's account, with its own devices.*
 
-* Method : POST
-* Path : /apis/account/unregister
-* Content type : application/json
-* Request payload : `Account` represented in JSON format containing user's E-mail address and SHA-hashed password which is obtained in register/login procedure, in JSON format.
+* **Method** : POST
+* **Path** : /apis/account/unregister
+* **Content type** : application/json
+* **Request payload** : `Account` represented in JSON format containing user's E-mail address and SHA-hashed password which is obtained in register/login procedure, in JSON format.
 
 **Sample request**
 > * Request URI : http://[YOUR_APPLICATION_ID].appspot.com/apis/account/unregister
@@ -118,10 +120,10 @@ REST API documentation
 
 *Register a new device. Payload should contain device information to be registered. Once device information has registered, each device's UUID has generated and returned to user with response. User should store device's UUID to request device-specific operations.*  
 
-* Method : POST
-* Path : /apis/device/register
-* Content type : application/json
-* Request payload : Device info containing device nickname, owner's account information and GCM registration key, in JSON format
+* **Method** : POST
+* **Path** : /apis/device/register
+* **Content type** : application/json
+* **Request payload** : `Device` info containing device nickname, owner's account information and GCM registration key, in JSON format
 
 **Sample request**
 > * Request URI : http://[YOUR_APPLICATION_ID].appspot.com/apis/device/register
@@ -129,7 +131,7 @@ REST API documentation
 > * Content type : application/json
 > * Request payload : {"nickname":"Nexus","ownerAccount":{"email":"android@android.com","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"},"registrationKey":"regkey"}
 
-**Returns**
+**Returns**  
 **Registered device :**
 >  {"result":"0","data":{"@type":"device","deviceUUID":"3c2925e3-4b8a-4dbd-9aaf-c315d0fa6b1e","nickname":"Nexus","ownerAccount":{"email":"android@android.com","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"},"registrationKey":"regkey"}}
 
@@ -146,10 +148,10 @@ REST API documentation
 
 *Updates device information.*  
 
-* Method : POST
-* Path : /apis/device/update
-* Content type : application/json
-* Request payload : Device information to be updated, in JSON format. Note that device only nickname and GCM registration key is subject to change.
+* **Method** : POST
+* **Path** : /apis/device/update
+* **Content type** : application/json
+* **Request payload** : `Device` information to be updated, in JSON format. Note that device only nickname and GCM registration key is subject to change.
 
 **Sample request**
 > * Request URI : http://[YOUR_APPLICATION_ID].appspot.com/apis/device/update
@@ -157,7 +159,7 @@ REST API documentation
 > * Content type : application/json
 > * Request payload : {"deviceUUID":"3c2925e3-4b8a-4dbd-9aaf-c315d0fa6b1e","nickname":"Nexus","ownerAccount":{"email":"android@android.com","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"},"registrationKey":"New reg key"}
 
-**Returns**
+**Returns**  
 **Updated device information :**
 >  {"result":"0"}
 
@@ -174,10 +176,10 @@ REST API documentation
 
 *Delete registered device.*  
 
-* Method : POST
-* Path : /apis/device/delete
-* Content type : application/json
-* Request payload : Device info containing device nickname, owner's account information and GCM registration key, in JSON format
+* **Method** : POST
+* **Path** : /apis/device/delete
+* **Content type** : application/json
+* **Request payload** : `Device` info containing device nickname, owner's account information and GCM registration key, in JSON format
 
 **Sample request**
 > * Request URI : http://[YOUR_APPLICATION_ID].appspot.com/apis/device/delete
@@ -185,7 +187,7 @@ REST API documentation
 > * Content type : application/json
 > * Request payload : {"deviceUUID":"3c2925e3-4b8a-4dbd-9aaf-c315d0fa6b1e","nickname":"Nexus","ownerAccount":{"email":"android@android.com","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"},"registrationKey":"Regkey"}
 
-**Returns**
+**Returns**  
 **Deleted device :**
 >  {"result":"0"}
 
@@ -199,10 +201,10 @@ REST API documentation
 
 *Delete all device linked to this user.*  
 
-* Method : POST
-* Path : /apis/device/deleteAll
-* Content type : application/json
-* Request payload : Account information represented in JSON format
+* **Method** : POST
+* **Path** : /apis/device/deleteAll
+* **Content type** : application/json
+* **Request payload** : `Account` information represented in JSON format
 
 **Sample request**
 > * Request URI : http://[YOUR_APPLICATION_ID].appspot.com/apis/device/deleteAll
@@ -210,7 +212,7 @@ REST API documentation
 > * Content type : application/json
 > * Request payload : {"email" : "android@android.com", "password" : "a94a8fe5ccb19ba61c4c873d391e987982fbbd3"}
 
-**Returns**
+**Returns**  
 **Deleted all device :**
 >  {"result":"0"}
 
@@ -230,19 +232,19 @@ REST API documentation
 
 *YOU SHOULD REMOVE THIS REST API PATH AFTER SETUP PROCEDURE HAS DONE.*  
 
-* Method : GET
-* Path : /apis/admin/init
-* Content type : none
-* Request payload : none
+* **Method** : GET
+* **Path** : /apis/admin/init
+* **Content type** : none
+* **Request payload** : none
 
 **Sample request**
-> * Request URI : http://[YOUR_APPLICATION_ID].appspot.com/apis/admin/init
+> * Request URI : http://[your-application-id].appspot.com/apis/admin/init
 > * Request Method : GET
 > * Content type : none
 > * Request payload : none
 
-**Returns**
-**Redirected to configuration_done.html :**
+**Returns**  
+**Redirected to `configuration_done.html`**
 
 About Remoteroid
 ------------------
