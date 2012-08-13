@@ -1,7 +1,7 @@
 Remoteroid web service
 =========
   
-![Remoteroid](/remoteroid_logo.png)
+![Remoteroid](https://raw.github.com/kunny/RemoteroidWeb/master/remoteroid_logo.png)
   
 This project aims to support 'Remote-connect' feature, which user can connect to the phone from PC, without any control on the phone.
 
