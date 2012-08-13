@@ -22,6 +22,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+System Architecture
+-----------------
+* **Google App Engine** for Web service
+* **JAX-RS Jersey** for REST service
+* **Google Cloud Messaging** for Push message service
+
 REST API documentation
 -----------------
 **Path** : /apis  
