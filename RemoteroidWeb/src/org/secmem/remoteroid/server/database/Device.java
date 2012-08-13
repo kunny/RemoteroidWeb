@@ -117,7 +117,7 @@ public class Device{
 	 * Get device's UUID in owner's account
 	 * @return an UUID
 	 */
-	public String getUUID() {
+	public String getDeviceUUID() {
 		return deviceUUID;
 	}
 

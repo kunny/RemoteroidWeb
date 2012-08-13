@@ -87,7 +87,7 @@ public class AccountREST extends DBUtils{
 	@Path("/login")
 	public BaseResponse login(Account account){
 		// Check user credentials
-		if(!isUserCredentialMatches(account)){
+		if(!isUserCredentialMatchesWithRawPassword(account)){
 			// Failed to authenticate user.
 			return new BaseErrorResponse(Codes.Error.Account.AUTH_FAILED);
 		}
@@ -169,6 +169,20 @@ public class AccountREST extends DBUtils{
 		q.setFilter(CompositeFilterOperator.and(
 				new FilterPredicate(Account.EMAIL, FilterOperator.EQUAL, account.getEmail()),
 				new FilterPredicate(Account.PASSWORD, FilterOperator.EQUAL, account.getPassword())));
+		List<Entity> result = query(q);
+		if(result.size()==0){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	static boolean isUserCredentialMatchesWithRawPassword(Account account){
+		Query q = new Query(Account._NAME);
+		SHAPasswordObfuscator obfuscator = new SHAPasswordObfuscator();
+		q.setFilter(CompositeFilterOperator.and(
+				new FilterPredicate(Account.EMAIL, FilterOperator.EQUAL, account.getEmail()),
+				new FilterPredicate(Account.PASSWORD, FilterOperator.EQUAL, obfuscator.generate(account.getPassword()))));
 		List<Entity> result = query(q);
 		if(result.size()==0){
 			return false;

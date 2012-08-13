@@ -25,6 +25,7 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -69,7 +70,7 @@ public class DeviceREST extends DBUtils{
 		}
 		
 		// Check duplication in devices which current user has registered
-		if(!isDuplicateDeviceExists(device.getOwnerAccount().getEmail(), device.getNickname())){
+		if(isDuplicateDeviceExists(device.getOwnerAccount().getEmail(), device.getNickname())){
 			return new BaseErrorResponse(Codes.Error.Device.DUPLICATE_NAME);
 		}
 		
@@ -83,7 +84,7 @@ public class DeviceREST extends DBUtils{
 			entity.setProperty(Device.OWNER_EMAIL, device.getOwnerAccount().getEmail());
 			entity.setProperty(Device.NICKNAME, device.getNickname());
 			entity.setProperty(Device.REGISTRATION_KEY, device.getRegistrationKey());
-			entity.setProperty(Device.DEVICE_UUID, device.getUUID());
+			entity.setProperty(Device.DEVICE_UUID, device.getDeviceUUID());
 			
 			// Put into datastore
 			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -109,10 +110,21 @@ public class DeviceREST extends DBUtils{
 		
 		try{
 			// Get Entity object from data using user's email and uuid
-			Entity deviceEntity = getDeviceEntity(device.getOwnerAccount().getEmail(), device.getUUID());
+			Entity deviceEntity = getDeviceEntity(device.getOwnerAccount().getEmail(), device.getDeviceUUID());
 			
-			// Modify each entity's value to new one (Only supports nickname to be changed)
+			// Modify each entity's value to new one
+			String oldNickname = (String)deviceEntity.getProperty(Device.NICKNAME);
+			
+			// Check nickname duplicates or not
+			if(!oldNickname.equals(device.getNickname())){
+				// If nickname has changed
+				if(isDuplicateDeviceExists(device.getOwnerAccount().getEmail(), device.getNickname())){
+					return new BaseErrorResponse(Codes.Error.Device.DUPLICATE_NAME);
+				}
+			}
+			
 			deviceEntity.setProperty(Device.NICKNAME, device.getNickname());
+			deviceEntity.setProperty(Device.REGISTRATION_KEY, device.getRegistrationKey());
 			
 			// Put entity into datastore to apply changes
 			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -137,7 +149,7 @@ public class DeviceREST extends DBUtils{
 		
 		try{
 			// If entity exists in datastore, delete it.
-			Entity deviceEntity = getDeviceEntity(device.getOwnerAccount().getEmail(), device.getUUID());
+			Entity deviceEntity = getDeviceEntity(device.getOwnerAccount().getEmail(), device.getDeviceUUID());
 			
 			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 			datastore.delete(deviceEntity.getKey());
@@ -223,7 +235,7 @@ public class DeviceREST extends DBUtils{
 		q.setFilter(CompositeFilterOperator.and(
 				new FilterPredicate(Device.OWNER_EMAIL, FilterOperator.EQUAL, email),
 				new FilterPredicate(Device.NICKNAME, FilterOperator.EQUAL, nickname)));
-		return datastore.prepare(q).asList(FetchOptions.Builder.withDefaults()).size() > 1 ? true : false;
+		return datastore.prepare(q).asList(FetchOptions.Builder.withDefaults()).size() > 0 ? true : false;
 	}
 	
 	static Entity getDeviceEntity(String email, String deviceUUID) throws DeviceNotFoundException{
