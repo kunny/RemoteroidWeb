@@ -62,9 +62,7 @@ public class AccountREST extends DBUtils{
 		
 		try{
 			// Obfuscate password
-			String rawPassword = account.getPassword();
-			String obfuscatedPassword = new SHAPasswordObfuscator().generate(rawPassword);
-			account.setPassword(obfuscatedPassword);
+			account.obfuscatePassword(new SHAPasswordObfuscator());
 			
 			// Store data into DataStore
 			Entity newAccount = new Entity(Account._NAME, getRemoteroidKey(Account._NAME));
