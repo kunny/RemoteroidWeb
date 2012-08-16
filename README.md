@@ -28,6 +28,61 @@ System Architecture
 * **JAX-RS Jersey** for REST service
 * **Google Cloud Messaging** for Push message service
 
+Reponse Codes
+-----------------
+### Result
+* Description : Success
+* JSON elements :  
+**result** : 0  
+
+### Error  
+#### General  
+* Description : Unspecified error has occurred.
+* JSON elements :  
+**result** : -1  
+**errorCode** : 0  
+
+#### Account
+##### Duplicated E-mail
+* Description : There is duplicated e-mail address in the user's account.
+* JSON elements :  
+**result** : -1  
+**errorCode**  : 256(0x100)  
+* See Also :  
+[Add account](https://github.com/kunny/RemoteroidWeb/edit/master/README.md#add-account)
+
+##### Authentication failed
+* Description : User authentication has failed.
+* JSON elements :  
+**result** : -1  
+**errorCode**  : 257(0x101)
+* See Also :  
+[Login](https://github.com/kunny/RemoteroidWeb/edit/master/README.md#login)  
+[Delete account](https://github.com/kunny/RemoteroidWeb/edit/master/README.md#delete-account)  
+[Add new device](https://github.com/kunny/RemoteroidWeb/edit/master/README.md#add-new-device)  
+[Update device information](https://github.com/kunny/RemoteroidWeb/edit/master/README.md#update-device-information)  
+[Delete device](https://github.com/kunny/RemoteroidWeb/edit/master/README.md#delete-device)  
+[Delete all device linked to user](https://github.com/kunny/RemoteroidWeb/edit/master/README.md#delete-all-device-linked-to-user)  
+
+#### Device
+##### Duplicicated device name
+* Description : There is duplicicated device name exists on user's account.
+* JSON elements :  
+**result** : -1  
+**errorCode**  : 512(0x200)
+* See Also :  
+[Add new device](https://github.com/kunny/RemoteroidWeb/edit/master/README.md#add-new-device)  
+[Update device information](https://github.com/kunny/RemoteroidWeb/edit/master/README.md#update-device-information)    
+
+##### Device not found
+* Description : Requested device has not found on the user's device list.
+* JSON elements :  
+**result** : -1  
+**errorCode**  : 513(0x201)  
+* Seel Also :  
+[Update device information](https://github.com/kunny/RemoteroidWeb/edit/master/README.md#update-device-information)  
+[Delete device](https://github.com/kunny/RemoteroidWeb/edit/master/README.md#delete-device)  
+
 REST API documentation
 -----------------
 **Path** : /apis  

@@ -130,6 +130,9 @@ public class DeviceREST extends DBUtils{
 			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 			datastore.put(deviceEntity);
 			return new BaseResponse();
+		}catch(DeviceNotFoundException e){
+			e.printStackTrace();
+			return new BaseErrorResponse(Codes.Error.Device.DEVICE_NOT_FOUND);
 		}catch(Exception e){
 			e.printStackTrace();
 			return new BaseErrorResponse();
@@ -155,6 +158,9 @@ public class DeviceREST extends DBUtils{
 			datastore.delete(deviceEntity.getKey());
 			
 			return new BaseResponse();
+		}catch(DeviceNotFoundException e){
+			e.printStackTrace();
+			return new BaseErrorResponse(Codes.Error.Device.DEVICE_NOT_FOUND);
 		}catch(Exception e){
 			e.printStackTrace();
 			return new BaseErrorResponse();
