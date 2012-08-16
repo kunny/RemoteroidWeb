@@ -31,9 +31,7 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p><img src="https://raw.github.com/kunny/RemoteroidWeb/master/remoteroid_logo.png" alt="Remoteroid"></p>
-
-<h2>License</h2>
+        <h2>License</h2>
 
 <p>Copyright(c) 2012 Taeho Kim (<a href="mailto:jyte82@gmail.com">jyte82@gmail.com</a>)</p>
 
@@ -59,56 +57,6 @@ along with this program.  If not, see <a href="http://www.gnu.org/licenses/">htt
 <strong>JAX-RS Jersey</strong> for REST service</li>
 <li>
 <strong>Google Cloud Messaging</strong> for Push message service</li>
-</ul><h2>Reponse Codes</h2>
-
-<h3>Result</h3>
-
-<ul>
-<li>Description : Success</li>
-<li>JSON elements :<br><strong>result</strong> : 0<br>
-</li>
-</ul><h3>Error</h3>
-
-<h4>General</h4>
-
-<ul>
-<li>Description : Unspecified error has occurred.</li>
-<li>JSON elements :<br><strong>result</strong> : -1<br><strong>errorCode</strong> : 0<br>
-</li>
-</ul><h4>Account</h4>
-
-<h5>Duplicated E-mail</h5>
-
-<ul>
-<li>Description : There is duplicated e-mail address in the user's account.</li>
-<li>JSON elements :<br><strong>result</strong> : -1<br><strong>errorCode</strong>  : 256(0x100)<br>
-</li>
-<li>See Also :<br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#add-account">Add account</a>
-</li>
-</ul><h5>Authentication failed</h5>
-
-<ul>
-<li>Description : User authentication has failed.</li>
-<li>JSON elements :<br><strong>result</strong> : -1<br><strong>errorCode</strong>  : 257(0x101)</li>
-<li>See Also :<br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#login">Login</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#delete-account">Delete account</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#add-new-device">Add new device</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#update-device-information">Update device information</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#delete-device">Delete device</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#delete-all-device-linked-to-user">Delete all device linked to user</a><br>
-</li>
-</ul><h4>Device</h4>
-
-<h5>Duplicicated device name</h5>
-
-<ul>
-<li>Description : There is duplicicated device name exists on user's account.</li>
-<li>JSON elements :<br><strong>result</strong> : -1<br><strong>errorCode</strong>  : 512(0x200)</li>
-<li>See Also :<br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#add-new-device">Add new device</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#update-device-information">Update device information</a><br>
-</li>
-</ul><h5>Device not found</h5>
-
-<ul>
-<li>Description : Requested device has not found on the user's device list.</li>
-<li>JSON elements :<br><strong>result</strong> : -1<br><strong>errorCode</strong>  : 513(0x201)<br>
-</li>
-<li>Seel Also :<br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#update-device-information">Update device information</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#delete-device">Delete device</a><br>
-</li>
 </ul><h2>REST API documentation</h2>
 
 <p><strong>Path</strong> : /apis  </p>
@@ -145,19 +93,19 @@ along with this program.  If not, see <a href="http://www.gnu.org/licenses/">htt
 </ul>
 </blockquote>
 
-<p><strong>Returns</strong><br><em>User registration succeed :</em></p>
+<p><strong>Returns</strong><br><strong>User registration succeed :</strong></p>
 
 <blockquote>
 <p>{"result":"0","data":{"<a href="https://github.com/type" class="user-mention">@type</a>":"account","email":"<a href="mailto:android@android.com">android@android.com</a>","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"}}</p>
 </blockquote>
 
-<p><em>E-mail duplicates :</em></p>
+<p><strong>E-mail duplicates :</strong></p>
 
 <blockquote>
 <p>{"result" : "-1", "errorCode" : "256"}</p>
 </blockquote>
 
-<p><em>Unhandled error occurred :</em></p>
+<p><strong>Unhandled error occurred :</strong></p>
 
 <blockquote>
 <p>{"result" : "-1", "errorCode" : "0"}</p>
@@ -187,7 +135,7 @@ along with this program.  If not, see <a href="http://www.gnu.org/licenses/">htt
 </ul>
 </blockquote>
 
-<p><strong>Returns</strong><br><em>Login succeed :</em></p>
+<p><strong>Returns</strong><br><strong>Login succeed :</strong></p>
 
 <blockquote>
 <p>{"result":"0","data":{"<a href="https://github.com/type" class="user-mention">@type</a>":"account","email":"<a href="mailto:android@android.com">android@android.com</a>","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"}}</p>
@@ -199,7 +147,7 @@ along with this program.  If not, see <a href="http://www.gnu.org/licenses/">htt
 <p>{"result":"-1","errorCode":"257"}</p>
 </blockquote>
 
-<p><em>Unhandled error occurred :</em></p>
+<p><strong>Unhandled error occurred :</strong></p>
 
 <blockquote>
 <p>{"result" : "-1", "errorCode" : "0"}</p>
@@ -241,7 +189,7 @@ along with this program.  If not, see <a href="http://www.gnu.org/licenses/">htt
 <p>{"result":"-1","errorCode":"257"}</p>
 </blockquote>
 
-<p><em>Unhandled error occurred :</em></p>
+<p><strong>Unhandled error occurred :</strong></p>
 
 <blockquote>
 <p>{"result" : "-1", "errorCode" : "0"}</p>
@@ -295,7 +243,7 @@ along with this program.  If not, see <a href="http://www.gnu.org/licenses/">htt
 <p>{"result":"-1","errorCode":"512"}</p>
 </blockquote>
 
-<p><em>Unhandled error occurred :</em></p>
+<p><strong>Unhandled error occurred :</strong></p>
 
 <blockquote>
 <p>{"result" : "-1", "errorCode" : "0"}</p>
@@ -343,7 +291,7 @@ along with this program.  If not, see <a href="http://www.gnu.org/licenses/">htt
 <p>{"result":"-1","errorCode":"512"}</p>
 </blockquote>
 
-<p><em>Unhandled error occurred :</em></p>
+<p><strong>Unhandled error occurred :</strong></p>
 
 <blockquote>
 <p>{"result" : "-1", "errorCode" : "0"}</p>
@@ -385,7 +333,7 @@ along with this program.  If not, see <a href="http://www.gnu.org/licenses/">htt
 <p>{"result":"-1","errorCode":"257"}</p>
 </blockquote>
 
-<p><em>Unhandled error occurred :</em></p>
+<p><strong>Unhandled error occurred :</strong></p>
 
 <blockquote>
 <p>{"result" : "-1", "errorCode" : "0"}</p>
@@ -427,7 +375,7 @@ along with this program.  If not, see <a href="http://www.gnu.org/licenses/">htt
 <p>{"result":"-1","errorCode":"257"}</p>
 </blockquote>
 
-<p><em>Unhandled error occurred :</em></p>
+<p><strong>Unhandled error occurred :</strong></p>
 
 <blockquote>
 <p>{"result" : "-1", "errorCode" : "0"}</p>
@@ -465,7 +413,57 @@ along with this program.  If not, see <a href="http://www.gnu.org/licenses/">htt
 
 <p><strong>Returns</strong><br><strong>Redirected to <code>configuration_done.html</code></strong></p>
 
-<h2>About Remoteroid</h2>
+<h2>Reponse Codes from REST APIs</h2>
+
+<h3>Result</h3>
+
+<ul>
+<li>Description : Success</li>
+<li>JSON element :<br><strong>result</strong> : 0<br>
+</li>
+</ul><h3>Error</h3>
+
+<h4>General</h4>
+
+<ul>
+<li>Description : Unspecified error has occurred.</li>
+<li>JSON elements :<br><strong>result</strong> : -1<br><strong>errorCode</strong> : 0<br>
+</li>
+</ul><h4>Account</h4>
+
+<h5>Duplicated E-mail</h5>
+
+<ul>
+<li>Description : There is duplicated e-mail address in the user's account.</li>
+<li>JSON elements :<br><strong>result</strong> : -1<br><strong>errorCode</strong>  : 256(0x100)<br>
+</li>
+<li>See Also :<br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#add-account">Add account</a>
+</li>
+</ul><h5>Authentication failed</h5>
+
+<ul>
+<li>Description : User authentication has failed.</li>
+<li>JSON elements :<br><strong>result</strong> : -1<br><strong>errorCode</strong>  : 257(0x101)</li>
+<li>See Also :<br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#login">Login</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#delete-account">Delete account</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#add-new-device">Add new device</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#update-device-information">Update device information</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#delete-device">Delete device</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#delete-all-device-linked-to-user">Delete all device linked to user</a><br>
+</li>
+</ul><h4>Device</h4>
+
+<h5>Duplicicated device name</h5>
+
+<ul>
+<li>Description : There is duplicicated device name exists on user's account.</li>
+<li>JSON elements :<br><strong>result</strong> : -1<br><strong>errorCode</strong>  : 512(0x200)</li>
+<li>See Also :<br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#add-new-device">Add new device</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#update-device-information">Update device information</a><br>
+</li>
+</ul><h5>Device not found</h5>
+
+<ul>
+<li>Description : Requested device has not found on the user's device list.</li>
+<li>JSON elements :<br><strong>result</strong> : -1<br><strong>errorCode</strong>  : 513(0x201)<br>
+</li>
+<li>Seel Also :<br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#update-device-information">Update device information</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#delete-device">Delete device</a><br>
+</li>
+</ul><h2>About Remoteroid</h2>
 
 <p>Remoteroid is a remote control solution for Android platform, including features like Drag-and-drop file transfer and delivering phone's notifications(Incoming call, Message, Notifications from apps, etc).</p>
 
