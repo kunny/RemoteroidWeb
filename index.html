@@ -31,22 +31,447 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h2>Key components</h2>
+        <p><img src="https://raw.github.com/kunny/RemoteroidWeb/master/remoteroid_logo.png" alt="Remoteroid"></p>
+
+<h2>License</h2>
+
+<p>Copyright(c) 2012 Taeho Kim (<a href="mailto:jyte82@gmail.com">jyte82@gmail.com</a>)</p>
+
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+<h2>System Architecture</h2>
 
 <ul>
 <li>
-<a href="http://jersey.java.net/">Java Jersey</a> for REST service</li>
+<strong>Google App Engine</strong> for Web service</li>
 <li>
-<a href="http://appengine.google.com">Google App Engine</a> for Web service</li>
+<strong>JAX-RS Jersey</strong> for REST service</li>
 <li>
-<a href="http://developer.android.com/guide/google/gcm/index.html">Google Cloud messaging for Android</a> for Push service </li>
-</ul><h2>About Remoteroid</h2>
+<strong>Google Cloud Messaging</strong> for Push message service</li>
+</ul><h2>Reponse Codes</h2>
+
+<h3>Result</h3>
+
+<ul>
+<li>Description : Success</li>
+<li>JSON elements :<br><strong>result</strong> : 0<br>
+</li>
+</ul><h3>Error</h3>
+
+<h4>General</h4>
+
+<ul>
+<li>Description : Unspecified error has occurred.</li>
+<li>JSON elements :<br><strong>result</strong> : -1<br><strong>errorCode</strong> : 0<br>
+</li>
+</ul><h4>Account</h4>
+
+<h5>Duplicated E-mail</h5>
+
+<ul>
+<li>Description : There is duplicated e-mail address in the user's account.</li>
+<li>JSON elements :<br><strong>result</strong> : -1<br><strong>errorCode</strong>  : 256(0x100)<br>
+</li>
+<li>See Also :<br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#add-account">Add account</a>
+</li>
+</ul><h5>Authentication failed</h5>
+
+<ul>
+<li>Description : User authentication has failed.</li>
+<li>JSON elements :<br><strong>result</strong> : -1<br><strong>errorCode</strong>  : 257(0x101)</li>
+<li>See Also :<br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#login">Login</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#delete-account">Delete account</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#add-new-device">Add new device</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#update-device-information">Update device information</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#delete-device">Delete device</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#delete-all-device-linked-to-user">Delete all device linked to user</a><br>
+</li>
+</ul><h4>Device</h4>
+
+<h5>Duplicicated device name</h5>
+
+<ul>
+<li>Description : There is duplicicated device name exists on user's account.</li>
+<li>JSON elements :<br><strong>result</strong> : -1<br><strong>errorCode</strong>  : 512(0x200)</li>
+<li>See Also :<br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#add-new-device">Add new device</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#update-device-information">Update device information</a><br>
+</li>
+</ul><h5>Device not found</h5>
+
+<ul>
+<li>Description : Requested device has not found on the user's device list.</li>
+<li>JSON elements :<br><strong>result</strong> : -1<br><strong>errorCode</strong>  : 513(0x201)<br>
+</li>
+<li>Seel Also :<br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#update-device-information">Update device information</a><br><a href="https://github.com/kunny/RemoteroidWeb/edit/master/README.md#delete-device">Delete device</a><br>
+</li>
+</ul><h2>REST API documentation</h2>
+
+<p><strong>Path</strong> : /apis  </p>
+
+<p><em>Remoteroid Web Service REST API provides various method regarding Account, Device, and Administration. APIs in Account and Device category is for service users, while Admin is only for service administrator. (Note that after you completed setup by accessing <code>http://[your-application-id].appspot.com/apis/admin/init</code>, you should remove API Path for Admin to prevent illegal access from anonymous.)</em>  </p>
+
+<h3>Account</h3>
+
+<hr><p><strong>Path</strong> : /apis/account  </p>
+
+<p><em>Provides method to user that can register, login, and unregister from this service.</em></p>
+
+<h4>Add account</h4>
+
+<p><em>Adds new user account. Each user is identified by its own E-mail address, so an E-mail address should not be duplicated.</em></p>
+
+<ul>
+<li>
+<strong>Method</strong> : POST</li>
+<li>
+<strong>Path</strong> : /apis/account/register</li>
+<li>
+<strong>Content type</strong> : application/json</li>
+<li>
+<strong>Request payload</strong> : <code>Account</code> represented in JSON format containing user's E-mail address and raw password, in JSON format.</li>
+</ul><p><strong>Sample request</strong></p>
+
+<blockquote>
+<ul>
+<li>Request URI : http://[YOUR_APPLICATION_ID].appspot.com/apis/account/register</li>
+<li>Request Method : POST</li>
+<li>Content type : application/json</li>
+<li>Request payload : {"email" : "<a href="mailto:android@android.com">android@android.com</a>", "password" : "test"}</li>
+</ul>
+</blockquote>
+
+<p><strong>Returns</strong><br><em>User registration succeed :</em></p>
+
+<blockquote>
+<p>{"result":"0","data":{"<a href="https://github.com/type" class="user-mention">@type</a>":"account","email":"<a href="mailto:android@android.com">android@android.com</a>","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"}}</p>
+</blockquote>
+
+<p><em>E-mail duplicates :</em></p>
+
+<blockquote>
+<p>{"result" : "-1", "errorCode" : "256"}</p>
+</blockquote>
+
+<p><em>Unhandled error occurred :</em></p>
+
+<blockquote>
+<p>{"result" : "-1", "errorCode" : "0"}</p>
+</blockquote>
+
+<h4>Login</h4>
+
+<p><em>Process user's login. Once authenticated, user will retrieve user's account data with SHA-hashed password.</em></p>
+
+<ul>
+<li>
+<strong>Method</strong> : POST</li>
+<li>
+<strong>Path</strong> : /apis/account/login</li>
+<li>
+<strong>Content type</strong> : application/json</li>
+<li>
+<strong>Request payload</strong> : <code>Account</code> represented in JSON format containing user's E-mail address and raw password, in JSON format</li>
+</ul><p><strong>Sample request</strong></p>
+
+<blockquote>
+<ul>
+<li>Request URI : http://[YOUR_APPLICATION_ID].appspot.com/apis/account/register</li>
+<li>Request Method : POST</li>
+<li>Content type : application/json</li>
+<li>Request payload : {"email" : "<a href="mailto:android@android.com">android@android.com</a>", "password" : "test"}</li>
+</ul>
+</blockquote>
+
+<p><strong>Returns</strong><br><em>Login succeed :</em></p>
+
+<blockquote>
+<p>{"result":"0","data":{"<a href="https://github.com/type" class="user-mention">@type</a>":"account","email":"<a href="mailto:android@android.com">android@android.com</a>","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"}}</p>
+</blockquote>
+
+<p><strong>Authentication failed :</strong></p>
+
+<blockquote>
+<p>{"result":"-1","errorCode":"257"}</p>
+</blockquote>
+
+<p><em>Unhandled error occurred :</em></p>
+
+<blockquote>
+<p>{"result" : "-1", "errorCode" : "0"}</p>
+</blockquote>
+
+<h4>Delete account</h4>
+
+<p><em>Remove user's account, with its own devices.</em></p>
+
+<ul>
+<li>
+<strong>Method</strong> : POST</li>
+<li>
+<strong>Path</strong> : /apis/account/unregister</li>
+<li>
+<strong>Content type</strong> : application/json</li>
+<li>
+<strong>Request payload</strong> : <code>Account</code> represented in JSON format containing user's E-mail address and SHA-hashed password which is obtained in register/login procedure, in JSON format.</li>
+</ul><p><strong>Sample request</strong></p>
+
+<blockquote>
+<ul>
+<li>Request URI : http://[YOUR_APPLICATION_ID].appspot.com/apis/account/unregister</li>
+<li>Request Method : POST</li>
+<li>Content type : application/json</li>
+<li>Request payload : {"email" : "<a href="mailto:android@android.com">android@android.com</a>", "password" : "a94a8fe5ccb19ba61c4c873d391e987982fbbd3"}</li>
+</ul>
+</blockquote>
+
+<p><strong>Returns</strong><br><strong>Deleted account :</strong></p>
+
+<blockquote>
+<p>{"result" : "0"}</p>
+</blockquote>
+
+<p><strong>Authentication failed :</strong></p>
+
+<blockquote>
+<p>{"result":"-1","errorCode":"257"}</p>
+</blockquote>
+
+<p><em>Unhandled error occurred :</em></p>
+
+<blockquote>
+<p>{"result" : "-1", "errorCode" : "0"}</p>
+</blockquote>
+
+<h3>Device</h3>
+
+<hr><p><strong>Path</strong> : /apis/device   </p>
+
+<p><em>Provides method to user that can add, update and delete devices linked to user.</em></p>
+
+<h4>Add new device</h4>
+
+<p><em>Register a new device. Payload should contain device information to be registered. Once device information has registered, each device's UUID has generated and returned to user with response. User should store device's UUID to request device-specific operations.</em>  </p>
+
+<ul>
+<li>
+<strong>Method</strong> : POST</li>
+<li>
+<strong>Path</strong> : /apis/device/register</li>
+<li>
+<strong>Content type</strong> : application/json</li>
+<li>
+<strong>Request payload</strong> : <code>Device</code> info containing device nickname, owner's account information and GCM registration key, in JSON format</li>
+</ul><p><strong>Sample request</strong></p>
+
+<blockquote>
+<ul>
+<li>Request URI : http://[YOUR_APPLICATION_ID].appspot.com/apis/device/register</li>
+<li>Request Method : POST</li>
+<li>Content type : application/json</li>
+<li>Request payload : {"nickname":"Nexus","ownerAccount":{"email":"<a href="mailto:android@android.com">android@android.com</a>","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"},"registrationKey":"regkey"}</li>
+</ul>
+</blockquote>
+
+<p><strong>Returns</strong><br><strong>Registered device :</strong></p>
+
+<blockquote>
+<p>{"result":"0","data":{"<a href="https://github.com/type" class="user-mention">@type</a>":"device","deviceUUID":"3c2925e3-4b8a-4dbd-9aaf-c315d0fa6b1e","nickname":"Nexus","ownerAccount":{"email":"<a href="mailto:android@android.com">android@android.com</a>","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"},"registrationKey":"regkey"}}</p>
+</blockquote>
+
+<p><strong>Authentication failed :</strong></p>
+
+<blockquote>
+<p>{"result":"-1","errorCode":"257"}</p>
+</blockquote>
+
+<p><strong>Device nickname duplicates :</strong></p>
+
+<blockquote>
+<p>{"result":"-1","errorCode":"512"}</p>
+</blockquote>
+
+<p><em>Unhandled error occurred :</em></p>
+
+<blockquote>
+<p>{"result" : "-1", "errorCode" : "0"}</p>
+</blockquote>
+
+<h4>Update device information</h4>
+
+<p><em>Updates device information.</em>  </p>
+
+<ul>
+<li>
+<strong>Method</strong> : POST</li>
+<li>
+<strong>Path</strong> : /apis/device/update</li>
+<li>
+<strong>Content type</strong> : application/json</li>
+<li>
+<strong>Request payload</strong> : <code>Device</code> information to be updated, in JSON format. Note that device only nickname and GCM registration key is subject to change.</li>
+</ul><p><strong>Sample request</strong></p>
+
+<blockquote>
+<ul>
+<li>Request URI : http://[YOUR_APPLICATION_ID].appspot.com/apis/device/update</li>
+<li>Request Method : POST</li>
+<li>Content type : application/json</li>
+<li>Request payload : {"deviceUUID":"3c2925e3-4b8a-4dbd-9aaf-c315d0fa6b1e","nickname":"Nexus","ownerAccount":{"email":"<a href="mailto:android@android.com">android@android.com</a>","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"},"registrationKey":"New reg key"}</li>
+</ul>
+</blockquote>
+
+<p><strong>Returns</strong><br><strong>Updated device information :</strong></p>
+
+<blockquote>
+<p>{"result":"0"}</p>
+</blockquote>
+
+<p><strong>Authentication failed :</strong></p>
+
+<blockquote>
+<p>{"result":"-1","errorCode":"257"}</p>
+</blockquote>
+
+<p><strong>Device nickname duplicates :</strong></p>
+
+<blockquote>
+<p>{"result":"-1","errorCode":"512"}</p>
+</blockquote>
+
+<p><em>Unhandled error occurred :</em></p>
+
+<blockquote>
+<p>{"result" : "-1", "errorCode" : "0"}</p>
+</blockquote>
+
+<h4>Delete device</h4>
+
+<p><em>Delete registered device.</em>  </p>
+
+<ul>
+<li>
+<strong>Method</strong> : POST</li>
+<li>
+<strong>Path</strong> : /apis/device/delete</li>
+<li>
+<strong>Content type</strong> : application/json</li>
+<li>
+<strong>Request payload</strong> : <code>Device</code> info containing device nickname, owner's account information and GCM registration key, in JSON format</li>
+</ul><p><strong>Sample request</strong></p>
+
+<blockquote>
+<ul>
+<li>Request URI : http://[YOUR_APPLICATION_ID].appspot.com/apis/device/delete</li>
+<li>Request Method : POST</li>
+<li>Content type : application/json</li>
+<li>Request payload : {"deviceUUID":"3c2925e3-4b8a-4dbd-9aaf-c315d0fa6b1e","nickname":"Nexus","ownerAccount":{"email":"<a href="mailto:android@android.com">android@android.com</a>","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"},"registrationKey":"Regkey"}</li>
+</ul>
+</blockquote>
+
+<p><strong>Returns</strong><br><strong>Deleted device :</strong></p>
+
+<blockquote>
+<p>{"result":"0"}</p>
+</blockquote>
+
+<p><strong>Authentication failed :</strong></p>
+
+<blockquote>
+<p>{"result":"-1","errorCode":"257"}</p>
+</blockquote>
+
+<p><em>Unhandled error occurred :</em></p>
+
+<blockquote>
+<p>{"result" : "-1", "errorCode" : "0"}</p>
+</blockquote>
+
+<h4>Delete all device linked to user</h4>
+
+<p><em>Delete all device linked to this user.</em>  </p>
+
+<ul>
+<li>
+<strong>Method</strong> : POST</li>
+<li>
+<strong>Path</strong> : /apis/device/deleteAll</li>
+<li>
+<strong>Content type</strong> : application/json</li>
+<li>
+<strong>Request payload</strong> : <code>Account</code> information represented in JSON format</li>
+</ul><p><strong>Sample request</strong></p>
+
+<blockquote>
+<ul>
+<li>Request URI : http://[YOUR_APPLICATION_ID].appspot.com/apis/device/deleteAll</li>
+<li>Request Method : POST</li>
+<li>Content type : application/json</li>
+<li>Request payload : {"email" : "<a href="mailto:android@android.com">android@android.com</a>", "password" : "a94a8fe5ccb19ba61c4c873d391e987982fbbd3"}</li>
+</ul>
+</blockquote>
+
+<p><strong>Returns</strong><br><strong>Deleted all device :</strong></p>
+
+<blockquote>
+<p>{"result":"0"}</p>
+</blockquote>
+
+<p><strong>Authentication failed :</strong></p>
+
+<blockquote>
+<p>{"result":"-1","errorCode":"257"}</p>
+</blockquote>
+
+<p><em>Unhandled error occurred :</em></p>
+
+<blockquote>
+<p>{"result" : "-1", "errorCode" : "0"}</p>
+</blockquote>
+
+<h3>Admin</h3>
+
+<hr><p><strong>Path</strong> : /apis/admin   </p>
+
+<p><em>Provides method for administration purpose.</em></p>
+
+<h4>Initiate Datastore for GCM API Key</h4>
+
+<p><em>YOU SHOULD REMOVE THIS REST API PATH AFTER SETUP PROCEDURE HAS DONE.</em>  </p>
+
+<ul>
+<li>
+<strong>Method</strong> : GET</li>
+<li>
+<strong>Path</strong> : /apis/admin/init</li>
+<li>
+<strong>Content type</strong> : none</li>
+<li>
+<strong>Request payload</strong> : none</li>
+</ul><p><strong>Sample request</strong></p>
+
+<blockquote>
+<ul>
+<li>Request URI : http://[your-application-id].appspot.com/apis/admin/init</li>
+<li>Request Method : GET</li>
+<li>Content type : none</li>
+<li>Request payload : none</li>
+</ul>
+</blockquote>
+
+<p><strong>Returns</strong><br><strong>Redirected to <code>configuration_done.html</code></strong></p>
+
+<h2>About Remoteroid</h2>
 
 <p>Remoteroid is a remote control solution for Android platform, including features like Drag-and-drop file transfer and delivering phone's notifications(Incoming call, Message, Notifications from apps, etc).</p>
 
 <p>You can control your Phone on your PC without leaving your hands from keyboard and mouse.</p>
 
-<p>Stable version of Remoteroid is available on Google code. By now, it only supports Windows and  <strong>requires root permission</strong> on the device. We're finding another way to run Remoteroid that doesn't requires root permission. Please stay tuned for new releases. And if you have any idea about 'Non-rooting approach', please contact to <a href="mailto:jyte82@gmail.com">jyte82@gmail.com</a>.</p>
+<p>Stable version of Remoteroid is available on Google code, but It only supports Windows. In addition, by now, <strong>Remoteroid requires root permission</strong> on the device. We're finding another way to run Remoteroid that doesn't requires root permission. Please stay tuned for new releases. And if you have any idea about 'Non-rooting approach', please contact to <a href="mailto:jyte82@gmail.com">jyte82@gmail.com</a>.</p>
 
 <ul>
 <li><a href="http://remoteroid.googlecode.com">Remoteroid on Google code (Stable, Only supports Windows)</a></li>
