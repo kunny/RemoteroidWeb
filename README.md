@@ -125,7 +125,7 @@ REST API documentation
 
 #### Add new device
 
-*Register a new device. Payload should contain device information to be registered. Once device information has registered, each device's UUID has generated and returned to user with response. User should store device's UUID to request device-specific operations.*  
+*Register a new device. Payload should contain device information to be registered. Once device information has registered, each device's UUID is generated and returned to user with response. User should store device's UUID to request device-specific operations.*  
 
 * **Method** : POST
 * **Path** : /apis/device/register
@@ -158,7 +158,7 @@ REST API documentation
 * **Method** : POST
 * **Path** : /apis/device/update
 * **Content type** : application/json
-* **Request payload** : `Device` information to be updated, in JSON format. Note that device only nickname and GCM registration key is subject to change.
+* **Request payload** : `Device` information to be updated, in JSON format. Note that only nickname and GCM registration key is subject to change.
 
 **Sample request**
 > * Request URI : http://[YOUR_APPLICATION_ID].appspot.com/apis/device/update
@@ -244,13 +244,10 @@ REST API documentation
 * **Content type** : none
 * **Request payload** : none
 
-**Sample request**
+**Sample request - Just type following URI on your web browser.**
 > * Request URI : http://[your-application-id].appspot.com/apis/admin/init
-> * Request Method : GET
-> * Content type : none
-> * Request payload : none
 
-**Returns**  
+**Result**  
 **Redirected to `configuration_done.html`**
 
 Reponse Codes from REST APIs
@@ -269,7 +266,7 @@ Reponse Codes from REST APIs
 
 #### Account
 ##### Duplicated E-mail
-* Description : There is duplicated e-mail address in the user's account.
+* Description : There is duplicated e-mail exists in the user list.
 * JSON elements :  
 **result** : -1  
 **errorCode**  : 256(0x100)  
@@ -318,4 +315,4 @@ You can control your Phone on your PC without leaving your hands from keyboard a
 Stable version of Remoteroid is available on Google code, but It only supports Windows. In addition, by now, **Remoteroid requires root permission** on the device. We're finding another way to run Remoteroid that doesn't requires root permission. Please stay tuned for new releases. And if you have any idea about 'Non-rooting approach', please contact to jyte82@gmail.com.
 
 * [Remoteroid on Google code (Stable, Only supports Windows)](http://remoteroid.googlecode.com)
-* [Remoteroid server, platform-idependant (In development)](https://github.com/kunny/RemoteroidServerUniversal)
+* [Remoteroid server, platform-independant (In development)](https://github.com/kunny/RemoteroidServerUniversal)
