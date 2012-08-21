@@ -20,6 +20,7 @@
  */
 package org.secmem.remoteroid.server;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -90,6 +91,44 @@ public class DeviceREST extends DBUtils{
 			datastore.put(entity);
 			
 			return new ObjectResponse<Device>(device);
+		}catch(Exception e){
+			e.printStackTrace();
+			return new BaseErrorResponse();
+		}
+	}
+	
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/list")
+	public BaseResponse retreiveDeviceList(Account account){
+		// Check user credential first
+		if(!AccountREST.isUserCredentialMatches(account)){
+			// Failed to authenticate.
+			return new BaseErrorResponse(Codes.Error.Account.AUTH_FAILED);
+		}
+		
+		try{
+			// Get Entity object from data using user's email and uuid
+			List<Entity> deviceEntities = getDeviceEntities(account.getEmail());
+			
+			ArrayList<Device> result = new ArrayList<Device>();
+			
+			// Add to result list
+			for(Entity entity : deviceEntities){
+				Device dev = new Device();
+				dev.setNickname((String)entity.getProperty(Device.NICKNAME));
+				dev.setOwnerAccount(account);
+				dev.setRegistrationKey((String)entity.getProperty(Device.REGISTRATION_KEY));
+				dev.setDeviceUUID((String)entity.getProperty(Device.DEVICE_UUID));
+				
+				result.add(dev);
+			}
+			
+			return new ObjectResponse<ArrayList<Device>>(result);
+		}catch(DeviceNotFoundException e){
+			e.printStackTrace();
+			return new BaseErrorResponse(Codes.Error.Device.DEVICE_NOT_FOUND);
 		}catch(Exception e){
 			e.printStackTrace();
 			return new BaseErrorResponse();
@@ -256,6 +295,17 @@ public class DeviceREST extends DBUtils{
 			throw new IllegalStateException();
 		else
 			return result.get(0);
+	}
+	
+	List<Entity> getDeviceEntities(String email) throws DeviceNotFoundException{
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		Query q = new Query(Device._NAME);
+		q.setFilter(new FilterPredicate(Device.OWNER_EMAIL, FilterOperator.EQUAL, email));
+		List<Entity> result = datastore.prepare(q).asList(FetchOptions.Builder.withDefaults());
+		if(result.size()==0)
+			throw new DeviceNotFoundException();
+		else
+			return result;
 	}
 	
 }

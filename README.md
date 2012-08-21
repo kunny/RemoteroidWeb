@@ -151,6 +151,31 @@ REST API documentation
 **Unhandled error occurred :**
 > {"result" : "-1", "errorCode" : "0"}
 
+#### Get my device list
+
+*Retrieve my device list*  
+
+* **Method** : POST
+* **Path** : /apis/device/list
+* **Content type** : application/json
+* **Request payload** : User's Account information in JSON format
+
+**Sample request**
+> * Request URI : http://[YOUR_APPLICATION_ID].appspot.com/apis/device/list
+> * Request Method : POST
+> * Content type : application/json
+> * Request payload : {"email":"android@android.com","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"}  
+
+**Returns**  
+**My device list :**
+>  {"result":"0","data":[{"@type":"device","deviceUUID":"3c2925e3-4b8a-4dbd-9aaf-c315d0fa6b1e","nickname":"Nexus","ownerAccount":{"email":"android@android.com","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"},"registrationKey":"regkey"},{"@type":"device","deviceUUID":"2c2925e3-4b8d-4dbd-9abf-c383d0fa6b1e","nickname":"Galaxy note","ownerAccount":{"email":"android@android.com","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"},"registrationKey":"regkeys"}]}
+
+**Authentication failed :**
+>  {"result":"-1","errorCode":"257"}
+
+**Unhandled error occurred :**
+> {"result" : "-1", "errorCode" : "0"}  
+
 #### Update device information
 
 *Updates device information.*  
