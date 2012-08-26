@@ -33,6 +33,7 @@ public class Codes {
 		public static class Account{
 			public static final int DUPLICATE_EMAIL = 0x100;
 			public static final int AUTH_FAILED = 0x101;
+			public static final int NOT_VALID_EMAIL = 0x102;
 		}
 		
 		public static class Device{

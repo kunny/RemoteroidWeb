@@ -21,6 +21,7 @@
 package org.secmem.remoteroid.server;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -53,6 +54,11 @@ public class AccountREST extends DBUtils{
 	public BaseResponse addAccount(Account account){
 		if(account==null){
 			return new BaseErrorResponse();
+		}
+		
+		// Email validity check
+		if(!Pattern.matches("[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})", account.getEmail())){
+			return new BaseErrorResponse(Codes.Error.Account.NOT_VALID_EMAIL);
 		}
 		
 		// Email duplicate check

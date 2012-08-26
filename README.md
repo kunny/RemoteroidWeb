@@ -64,6 +64,9 @@ REST API documentation
 **E-mail duplicates :**
 > {"result" : "-1", "errorCode" : "256"}
 
+**E-mail format is not valid :**
+> {"result" : "-1", "errorCode" : "258"}
+
 **Unhandled error occurred :**
 > {"result" : "-1", "errorCode" : "0"}
 
@@ -172,6 +175,9 @@ REST API documentation
 
 **Authentication failed :**
 >  {"result":"-1","errorCode":"257"}
+
+**No device exists :**
+>  {"result":"-1","errorCode":"513"}
 
 **Unhandled error occurred :**
 > {"result" : "-1", "errorCode" : "0"}  
@@ -295,6 +301,14 @@ Reponse Codes from REST APIs
 * JSON elements :  
 **result** : -1  
 **errorCode**  : 256(0x100)  
+* See Also :  
+[Add account](https://github.com/kunny/RemoteroidWeb/edit/master/README.md#add-account)
+
+##### E-mail format is not valid
+* Description : The E-mail address that has provided is not valid.
+* JSON elements :  
+**result** : -1  
+**errorCode**  : 258(0x102)  
 * See Also :  
 [Add account](https://github.com/kunny/RemoteroidWeb/edit/master/README.md#add-account)
 
