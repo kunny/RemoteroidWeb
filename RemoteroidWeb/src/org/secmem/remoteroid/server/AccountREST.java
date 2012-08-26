@@ -56,7 +56,7 @@ public class AccountREST extends DBUtils{
 		}
 		
 		// Email duplicate check
-		if(isEmailDuplicates(account.getEmail())){
+		if(isEmailExists(account.getEmail())){
 			return new BaseErrorResponse(Codes.Error.Account.DUPLICATE_EMAIL);
 		}
 		
@@ -84,6 +84,13 @@ public class AccountREST extends DBUtils{
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/login")
 	public BaseResponse login(Account account){
+		if(account==null){
+			return new BaseErrorResponse();
+		}
+		
+		if(!isEmailExists(account.getEmail())){
+			return new BaseErrorResponse(Codes.Error.Account.AUTH_FAILED);
+		}
 		// Check user credentials
 		if(!isUserCredentialMatchesWithRawPassword(account)){
 			// Failed to authenticate user.
@@ -108,6 +115,14 @@ public class AccountREST extends DBUtils{
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/unregister")
 	public BaseResponse deleteAccount(Account account){
+		if(account==null){
+			return new BaseErrorResponse();
+		}
+		
+		if(!isEmailExists(account.getEmail())){
+			return new BaseErrorResponse(Codes.Error.Account.AUTH_FAILED);
+		}
+		
 		// Check user credentials
 		if(!isUserCredentialMatches(account)){
 			// Failed to authenticate user.
@@ -133,14 +148,14 @@ public class AccountREST extends DBUtils{
 		}
 	}
 	
-	private boolean isEmailDuplicates(String email){
+	static boolean isEmailExists(String email){
 		Query q = new Query(Account._NAME);
 		q.setFilter(new FilterPredicate(Account.EMAIL, FilterOperator.EQUAL, email));
 		
 		List<Entity> result = query(q);
 		
 		if(result.size()==0){
-			// No duplicated email.
+			// No email exists.
 			return false;
 		}else
 			// Email duplicates.

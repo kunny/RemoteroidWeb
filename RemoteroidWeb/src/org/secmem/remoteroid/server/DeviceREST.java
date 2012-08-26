@@ -63,6 +63,14 @@ public class DeviceREST extends DBUtils{
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/register")
 	public BaseResponse registerDevice(Device device){
+		if(device==null){
+			return new BaseErrorResponse();
+		}
+		
+		if(!AccountREST.isEmailExists(device.getOwnerAccount().getEmail())){
+			return new BaseErrorResponse(Codes.Error.Account.AUTH_FAILED);
+		}
+		
 		// Check user credential first
 		if(!AccountREST.isUserCredentialMatches(device.getOwnerAccount())){
 			// Failed to authenticate.
@@ -102,6 +110,14 @@ public class DeviceREST extends DBUtils{
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/list")
 	public BaseResponse retreiveDeviceList(Account account){
+		if(account==null){
+			return new BaseErrorResponse();
+		}
+		
+		if(!AccountREST.isEmailExists(account.getEmail())){
+			return new BaseErrorResponse(Codes.Error.Account.AUTH_FAILED);
+		}
+		
 		// Check user credential first
 		if(!AccountREST.isUserCredentialMatches(account)){
 			// Failed to authenticate.
@@ -140,6 +156,14 @@ public class DeviceREST extends DBUtils{
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/update")
 	public BaseResponse updateDevice(Device device){
+		if(device==null){
+			return new BaseErrorResponse();
+		}
+		
+		if(!AccountREST.isEmailExists(device.getOwnerAccount().getEmail())){
+			return new BaseErrorResponse(Codes.Error.Account.AUTH_FAILED);
+		}
+		
 		// Check user credential first
 		if(!AccountREST.isUserCredentialMatches(device.getOwnerAccount())){
 			// Failed to authenticate.
@@ -182,6 +206,14 @@ public class DeviceREST extends DBUtils{
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/delete")
 	public BaseResponse deleteDevice(Device device){
+		if(device==null){
+			return new BaseErrorResponse();
+		}
+		
+		if(!AccountREST.isEmailExists(device.getOwnerAccount().getEmail())){
+			return new BaseErrorResponse(Codes.Error.Account.AUTH_FAILED);
+		}
+		
 		// Check user credential first
 		if(!AccountREST.isUserCredentialMatches(device.getOwnerAccount())){
 			// Failed to authenticate.
@@ -210,6 +242,13 @@ public class DeviceREST extends DBUtils{
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/deleteAll")
 	public static BaseResponse deleteAllDevicesOfUser(Account account){
+		if(account==null){
+			return new BaseErrorResponse();
+		}
+		
+		if(!AccountREST.isEmailExists(account.getEmail())){
+			return new BaseErrorResponse(Codes.Error.Account.AUTH_FAILED);
+		}
 		// Check user credential first
 		if(!AccountREST.isUserCredentialMatches(account)){
 			// Failed to authenticate.
@@ -237,6 +276,12 @@ public class DeviceREST extends DBUtils{
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/wakeup")
 	public BaseResponse sendConnectionMessage(WakeupMessage wakeupMessage){
+		if(wakeupMessage==null){
+			return new BaseErrorResponse();
+		}
+		if(!AccountREST.isEmailExists(wakeupMessage.getDevice().getOwnerAccount().getEmail())){
+			return new BaseErrorResponse(Codes.Error.Account.AUTH_FAILED);
+		}
 		// Check user credential first
 		if(!AccountREST.isUserCredentialMatches(wakeupMessage.getDevice().getOwnerAccount())){
 			// Failed to authenticate.
