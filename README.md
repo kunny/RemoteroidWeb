@@ -276,7 +276,7 @@ REST API documentation
 > * Request URI : http://[YOUR_APPLICATION_ID].appspot.com/apis/device/wakeup
 > * Request Method : POST
 > * Content type : application/json
-> * Request payload : {"device":"{"nickname":"Nexus","ownerAccount":{"email":"android@android.com","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"},"registrationKey":"regkey"}","serverIpAddress":"210.1.1.1"}
+> * Request payload : {"device":{"deviceUUID":"3c2925e3-4b8a-4dbd-9aaf-c315d0fa6b1e","nickname":"Nexus","ownerAccount":{"email":"android@android.com","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"},"registrationKey":"Regkey"},"serverIpAddress":"210.1.1.1"}
 
 **Returns**  
 **Message sent :**
