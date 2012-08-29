@@ -171,10 +171,10 @@ REST API documentation
 
 **Returns**  
 **My device list (two or more devices):**
-{"result":"0","data":[{"deviceUUID":"6b905046-caf5-4ebb-8872-66a2aace01de","nickname":"Nexus","registrationKey":"regkey"},{"deviceUUID":"6b905046-caf5-3ecc-8872-55a2aace10fa","nickname":"Galaxy","registrationKey":"regkey2"}]}
+> {"result":"0","data":[{"deviceUUID":"6b905046-caf5-4ebb-8872-66a2aace01de","nickname":"Nexus","registrationKey":"regkey"},{"deviceUUID":"6b905046-caf5-3ecc-8872-55a2aace10fa","nickname":"Galaxy","registrationKey":"regkey2"}]}
 
 **My device list (only one device):**
-{"result":"0","data":{"deviceUUID":"6b905046-caf5-4ebb-8872-66a2aace01de","nickname":"Nexus","registrationKey":"regkey"}}
+> {"result":"0","data":{"deviceUUID":"6b905046-caf5-4ebb-8872-66a2aace01de","nickname":"Nexus","registrationKey":"regkey"}}
 
 **Authentication failed :**
 >  {"result":"-1","errorCode":"257"}
@@ -255,6 +255,31 @@ REST API documentation
 
 **Returns**  
 **Deleted all device :**
+>  {"result":"0"}
+
+**Authentication failed :**
+>  {"result":"-1","errorCode":"257"}
+
+**Unhandled error occurred :**
+> {"result" : "-1", "errorCode" : "0"}
+
+#### Request connection request
+
+*Send connection request message to selected device to make device can connect to server by itself*  
+
+* **Method** : POST
+* **Path** : /apis/device/wakeup
+* **Content type** : application/json
+* **Request payload** : `WakeupMessage` info containing device information and server's IP address, in JSON format
+
+**Sample request**
+> * Request URI : http://[YOUR_APPLICATION_ID].appspot.com/apis/device/wakeup
+> * Request Method : POST
+> * Content type : application/json
+> * Request payload : {"device":"{"nickname":"Nexus","ownerAccount":{"email":"android@android.com","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"},"registrationKey":"regkey"}","serverIpAddress":"210.1.1.1"}
+
+**Returns**  
+**Message sent :**
 >  {"result":"0"}
 
 **Authentication failed :**
