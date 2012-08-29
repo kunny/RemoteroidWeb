@@ -38,6 +38,7 @@ import org.secmem.remoteroid.server.exception.DeviceNotFoundException;
 import org.secmem.remoteroid.server.response.BaseErrorResponse;
 import org.secmem.remoteroid.server.response.BaseResponse;
 import org.secmem.remoteroid.server.response.Codes;
+import org.secmem.remoteroid.server.response.DeviceListResponse;
 import org.secmem.remoteroid.server.response.ObjectResponse;
 
 import com.google.android.gcm.server.Constants;
@@ -134,14 +135,12 @@ public class DeviceREST extends DBUtils{
 			for(Entity entity : deviceEntities){
 				Device dev = new Device();
 				dev.setNickname((String)entity.getProperty(Device.NICKNAME));
-				dev.setOwnerAccount(account);
 				dev.setRegistrationKey((String)entity.getProperty(Device.REGISTRATION_KEY));
 				dev.setDeviceUUID((String)entity.getProperty(Device.DEVICE_UUID));
 				
 				result.add(dev);
-			}
-			
-			return new ObjectResponse<ArrayList<Device>>(result);
+			}	
+			return new DeviceListResponse(result);
 		}catch(DeviceNotFoundException e){
 			e.printStackTrace();
 			return new BaseErrorResponse(Codes.Error.Device.DEVICE_NOT_FOUND);

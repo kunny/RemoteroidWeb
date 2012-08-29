@@ -23,6 +23,10 @@ package org.secmem.remoteroid.server.database;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
 /**
  * Contains data regarding each device.
  * @author Taeho Kim
@@ -127,6 +131,14 @@ public class Device{
 	 */
 	public void setDeviceUUID(String deviceUUID) {
 		this.deviceUUID = deviceUUID;
+	}
+	
+	public JSONObject toJson() throws JSONException{
+		JSONObject json = new JSONObject();
+		json.put("nickname", nickname);
+		json.put("registrationKey", registrationKey);
+		json.put("deviceUUID", deviceUUID);
+		return json;
 	}
 	
 }

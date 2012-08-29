@@ -170,8 +170,11 @@ REST API documentation
 > * Request payload : {"email":"android@android.com","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"}  
 
 **Returns**  
-**My device list :**
->  {"result":"0","data":[{"@type":"device","deviceUUID":"3c2925e3-4b8a-4dbd-9aaf-c315d0fa6b1e","nickname":"Nexus","ownerAccount":{"email":"android@android.com","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"},"registrationKey":"regkey"},{"@type":"device","deviceUUID":"2c2925e3-4b8d-4dbd-9abf-c383d0fa6b1e","nickname":"Galaxy note","ownerAccount":{"email":"android@android.com","password":"a94a8fe5ccb19ba61c4c873d391e987982fbbd3"},"registrationKey":"regkeys"}]}
+**My device list (two or more devices):**
+{"result":"0","data":[{"deviceUUID":"6b905046-caf5-4ebb-8872-66a2aace01de","nickname":"Nexus","registrationKey":"regkey"},{"deviceUUID":"6b905046-caf5-3ecc-8872-55a2aace10fa","nickname":"Galaxy","registrationKey":"regkey2"}]}
+
+**My device list (only one device):**
+{"result":"0","data":{"deviceUUID":"6b905046-caf5-4ebb-8872-66a2aace01de","nickname":"Nexus","registrationKey":"regkey"}}
 
 **Authentication failed :**
 >  {"result":"-1","errorCode":"257"}
