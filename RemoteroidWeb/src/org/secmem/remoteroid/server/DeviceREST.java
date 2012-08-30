@@ -289,6 +289,7 @@ public class DeviceREST extends DBUtils{
 		
 		try{
 			String gcmApiKey = getGcmAPIKey();
+			
 			Sender sender = new Sender(gcmApiKey);
 			Message message = new Message.Builder().addData(WakeupMessage.IP_ADDRESS, wakeupMessage.getServerIpAddress()).build();
 			
