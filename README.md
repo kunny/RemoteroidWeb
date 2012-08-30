@@ -287,7 +287,10 @@ REST API documentation
 >  {"result":"-1","errorCode":"257"}
 
 **Unhandled error occurred :**
-> {"result" : "-1", "errorCode" : "0"}
+> {"result" : "-1", "errorCode" : "0"}  
+
+**Push message payload**
+You can get server's ip address from payload by using `WakeupMessage.IP_ADDRESS' as a key.
 
 ### Admin
 -----------------

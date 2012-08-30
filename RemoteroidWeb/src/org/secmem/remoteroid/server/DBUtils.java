@@ -24,7 +24,7 @@ import java.util.List;
 
 import org.secmem.remoteroid.server.database.Account;
 import org.secmem.remoteroid.server.database.Device;
-import org.secmem.remoteroid.server.database.GoogleApis;
+import org.secmem.remoteroid.server.database.GCM;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -63,12 +63,12 @@ public class DBUtils {
 	}
 	
 	protected String getApiProjectId(){
-		Query q = new Query(GoogleApis._NAME);
+		Query q = new Query(GCM._NAME);
 		List<Entity> result = query(q);
 		if(result.size()==0){
 			throw new IllegalStateException("There are no entity for Google Apis project id. Please create Entity for Google Apis project id by accessing http://[your appengine domain]/apis/admin/init");
 		}else{
-			return (String)result.get(0).getProperty(GoogleApis.PROJECT_ID);
+			return (String)result.get(0).getProperty(GCM.API_KEY);
 		}
 	}
 	

@@ -288,9 +288,9 @@ public class DeviceREST extends DBUtils{
 		}
 		
 		try{
-			String gcmApiKey = getApiProjectId();
-			log.info("Project id is "+gcmApiKey);
-			Sender sender = new Sender(gcmApiKey);
+			String projectId = getApiProjectId();
+			
+			Sender sender = new Sender(projectId);
 			Message message = new Message.Builder()
 				.addData(WakeupMessage.IP_ADDRESS, wakeupMessage.getServerIpAddress()).build();
 			
@@ -315,6 +315,7 @@ public class DeviceREST extends DBUtils{
 			}
 			return new BaseResponse();
 		}catch(Exception e){
+			e.printStackTrace();
 			return new BaseErrorResponse();
 		}
 	}

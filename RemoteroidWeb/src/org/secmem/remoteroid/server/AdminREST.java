@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
-import org.secmem.remoteroid.server.database.GoogleApis;
+import org.secmem.remoteroid.server.database.GCM;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -43,18 +43,18 @@ public class AdminREST extends DBUtils {
 	public Viewable createApiEntity(){
 		
 		// Check entity exists or not
-		Query q = new Query(GoogleApis._NAME);
+		Query q = new Query(GCM._NAME);
 		List<Entity> result = query(q);
 		
-		// Do only there are no entity for Google Apis project id
+		// Do only there are no entity for Google Cloud Messaging API Key
 		if(result.size()==0){
 			// API key entry not exists. Need to create new one.
-			Entity entity = new Entity(GoogleApis._NAME, getRemoteroidKey(GoogleApis._NAME));
+			Entity entity = new Entity(GCM._NAME, getRemoteroidKey(GCM._NAME));
 			
 			// NOTE : You cannot change entity's value on localhost server.
-			// If you intend to test GCM on your localhost, please replace PROJECT_ID_PLACEHOLDER into your own
-			// Google Apis Project ID.
-			entity.setProperty(GoogleApis.PROJECT_ID, "PROJECT_ID_PLACEHOLDER");
+			// If you intend to test GCM on your localhost, please replace API_KEY_PLACEHOLDER into your own
+			// API key.
+			entity.setProperty(GCM.API_KEY, "API_KEY_PLACEHOLDER");
 			
 			// Put api key entity to datastore
 			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();

@@ -20,8 +20,8 @@
  */
 package org.secmem.remoteroid.server.database;
 
-public class GoogleApis {
-	public static final String _NAME = "GoogleApis";
+public class GCM {
+	public static final String _NAME = "GCM";
 	
-	public static final String PROJECT_ID = "project_id";
+	public static final String API_KEY = "api_key";
 }
