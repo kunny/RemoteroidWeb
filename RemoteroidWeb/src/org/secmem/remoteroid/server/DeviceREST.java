@@ -288,10 +288,11 @@ public class DeviceREST extends DBUtils{
 		}
 		
 		try{
-			String gcmApiKey = getGcmAPIKey();
-			
+			String gcmApiKey = getApiProjectId();
+			log.info("Project id is "+gcmApiKey);
 			Sender sender = new Sender(gcmApiKey);
-			Message message = new Message.Builder().addData(WakeupMessage.IP_ADDRESS, wakeupMessage.getServerIpAddress()).build();
+			Message message = new Message.Builder()
+				.addData(WakeupMessage.IP_ADDRESS, wakeupMessage.getServerIpAddress()).build();
 			
 			Result result = sender.send(message, wakeupMessage.getDevice().getRegistrationKey(), 5);
 			
