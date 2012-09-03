@@ -7,6 +7,7 @@
 			<param-name>com.sun.jersey.config.property.packages</param-name>
 			<param-value>org.secmem.remoteroid.server</param-value>
 		</init-param>
+		<!-- Add following attribute to use Jackson instead JAXB : JAXB has some problem on processing JSONArray -->
 		<init-param>
 			<param-name>com.sun.jersey.config.property.packages</param-name>
 		  	<param-value>org.secmem.remoteroid.server;org.codehaus.jackson.jaxrs</param-value>
