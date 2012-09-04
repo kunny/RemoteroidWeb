@@ -22,7 +22,7 @@ package org.secmem.remoteroid.server.database;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.secmem.remoteroid.server.database.support.PasswordObfuscator;
+import org.secmem.remoteroid.server.database.support.Obfuscator;
 
 /**
  * Contains data represents each account.
@@ -91,7 +91,7 @@ public class Account{
 	 * Obfuscate raw password.
 	 * @param obfuscator a PasswordObfuscator
 	 */
-	public void obfuscatePassword(PasswordObfuscator obfuscator){
+	public void obfuscatePassword(Obfuscator obfuscator){
 		this.password = obfuscator.generate(this.password);
 	}
 	

@@ -39,6 +39,7 @@ public class Codes {
 		public static class Device{
 			public static final int DUPLICATE_NAME = 0x200;
 			public static final int DEVICE_NOT_FOUND = 0x201;
+			public static final int NO_DEVICE_UUID = 0x202;
 			
 		}
 	}

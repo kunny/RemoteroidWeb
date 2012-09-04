@@ -30,7 +30,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.secmem.remoteroid.server.database.Account;
-import org.secmem.remoteroid.server.database.support.SHAPasswordObfuscator;
+import org.secmem.remoteroid.server.database.support.SHAObfuscator;
 import org.secmem.remoteroid.server.response.BaseErrorResponse;
 import org.secmem.remoteroid.server.response.BaseResponse;
 import org.secmem.remoteroid.server.response.Codes;
@@ -68,7 +68,7 @@ public class AccountREST extends DBUtils{
 		
 		try{
 			// Obfuscate password
-			account.obfuscatePassword(new SHAPasswordObfuscator());
+			account.obfuscatePassword(new SHAObfuscator());
 			
 			// Store data into DataStore
 			Entity newAccount = new Entity(Account._NAME, getRemoteroidKey(Account._NAME));
@@ -198,7 +198,7 @@ public class AccountREST extends DBUtils{
 	
 	static boolean isUserCredentialMatchesWithRawPassword(Account account){
 		Query q = new Query(Account._NAME);
-		SHAPasswordObfuscator obfuscator = new SHAPasswordObfuscator();
+		SHAObfuscator obfuscator = new SHAObfuscator();
 		q.setFilter(CompositeFilterOperator.and(
 				new FilterPredicate(Account.EMAIL, FilterOperator.EQUAL, account.getEmail()),
 				new FilterPredicate(Account.PASSWORD, FilterOperator.EQUAL, obfuscator.generate(account.getPassword()))));

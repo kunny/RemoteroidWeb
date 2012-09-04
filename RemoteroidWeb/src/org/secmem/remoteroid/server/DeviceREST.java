@@ -22,7 +22,6 @@ package org.secmem.remoteroid.server;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
@@ -72,6 +71,10 @@ public class DeviceREST extends DBUtils{
 			return new BaseErrorResponse(Codes.Error.Account.AUTH_FAILED);
 		}
 		
+		if(device.getNickname()==null){
+			return new BaseErrorResponse(Codes.Error.Device.NO_DEVICE_UUID);
+		}
+		
 		// Check user credential first
 		if(!AccountREST.isUserCredentialMatches(device.getOwnerAccount())){
 			// Failed to authenticate.
@@ -79,14 +82,11 @@ public class DeviceREST extends DBUtils{
 		}
 		
 		// Check duplication in devices which current user has registered
-		if(isDuplicateDeviceExists(device.getOwnerAccount().getEmail(), device.getNickname())){
-			return new BaseErrorResponse(Codes.Error.Device.DUPLICATE_NAME);
+		if(isDuplicateDeviceExists(device)){
+			return updateDevice(device);
 		}
 		
 		try{
-			// Generate device uuid
-			device.setDeviceUUID(UUID.randomUUID().toString());
-			
 			// If no duplication exists, save registration info into Datastore
 			// Create entity for this
 			Entity entity = getDeviceEntity();
@@ -185,6 +185,7 @@ public class DeviceREST extends DBUtils{
 			}
 			
 			deviceEntity.setProperty(Device.NICKNAME, device.getNickname());
+			deviceEntity.setProperty(Device.DEVICE_UUID, device.getDeviceUUID());
 			deviceEntity.setProperty(Device.REGISTRATION_KEY, device.getRegistrationKey());
 			
 			// Put entity into datastore to apply changes
@@ -326,6 +327,16 @@ public class DeviceREST extends DBUtils{
 		q.setFilter(CompositeFilterOperator.and(
 				new FilterPredicate(Device.OWNER_EMAIL, FilterOperator.EQUAL, email),
 				new FilterPredicate(Device.NICKNAME, FilterOperator.EQUAL, nickname)));
+		return datastore.prepare(q).asList(FetchOptions.Builder.withDefaults()).size() > 0 ? true : false;
+	}
+	
+	private boolean isDuplicateDeviceExists(Device device){
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		Query q = new Query(Device._NAME);
+		q.setFilter(CompositeFilterOperator.and(
+				new FilterPredicate(Device.OWNER_EMAIL, FilterOperator.EQUAL, device.getOwnerAccount().getEmail()),
+				new FilterPredicate(Device.NICKNAME, FilterOperator.EQUAL, device.getNickname()),
+				new FilterPredicate(Device.DEVICE_UUID, FilterOperator.EQUAL, device.getDeviceUUID())));
 		return datastore.prepare(q).asList(FetchOptions.Builder.withDefaults()).size() > 0 ? true : false;
 	}
 	

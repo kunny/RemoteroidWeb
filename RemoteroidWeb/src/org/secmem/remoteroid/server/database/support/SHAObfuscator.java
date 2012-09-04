@@ -24,7 +24,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class SHAPasswordObfuscator implements PasswordObfuscator {
+public class SHAObfuscator implements Obfuscator {
 
 	@Override
 	public String generate(String password) {
