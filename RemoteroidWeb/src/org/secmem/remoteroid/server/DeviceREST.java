@@ -110,7 +110,7 @@ public class DeviceREST extends DBUtils{
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/list")
-	public BaseResponse retreiveDeviceList(Account account){
+	public BaseResponse retrieveDeviceList(Account account){
 		if(account==null){
 			return new BaseErrorResponse();
 		}
@@ -141,6 +141,48 @@ public class DeviceREST extends DBUtils{
 				result.add(dev);
 			}	
 			return new DeviceListResponse(result);
+		}catch(DeviceNotFoundException e){
+			e.printStackTrace();
+			return new BaseErrorResponse(Codes.Error.Device.DEVICE_NOT_FOUND);
+		}catch(Exception e){
+			e.printStackTrace();
+			return new BaseErrorResponse();
+		}
+	}
+	
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/retrieve_info")
+	public BaseResponse retrieveDeviceInfo(Device device){
+		if(device==null){
+			return new BaseErrorResponse();
+		}
+		
+		if(!AccountREST.isEmailExists(device.getOwnerAccount().getEmail())){
+			return new BaseErrorResponse(Codes.Error.Account.AUTH_FAILED);
+		}
+		
+		// Check user credential first
+		if(!AccountREST.isUserCredentialMatches(device.getOwnerAccount())){
+			// Failed to authenticate.
+			return new BaseErrorResponse(Codes.Error.Account.AUTH_FAILED);
+		}
+		
+		try{
+			// Get Entity object from data using user's email and uuid
+			List<Entity> deviceEntities = getDeviceEntities(device.getOwnerAccount().getEmail());
+			
+			// Add to result list
+			for(Entity entity : deviceEntities){
+				if(device.getDeviceUUID().equals((String)entity.getProperty(Device.DEVICE_UUID))){
+					device.setNickname((String)entity.getProperty(Device.NICKNAME));
+					device.setRegistrationKey((String)entity.getProperty(Device.REGISTRATION_KEY));
+					return new ObjectResponse<Device>(device);
+				}
+				
+			}	
+			return new BaseErrorResponse(Codes.Error.Device.DEVICE_NOT_FOUND);
 		}catch(DeviceNotFoundException e){
 			e.printStackTrace();
 			return new BaseErrorResponse(Codes.Error.Device.DEVICE_NOT_FOUND);
